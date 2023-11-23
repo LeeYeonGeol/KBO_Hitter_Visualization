@@ -1,1 +1,1 @@
-# KBO_Batter_Visualization
+# KBO_Hitter_Visualization
