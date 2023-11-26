@@ -55,7 +55,14 @@ if __name__ == '__main__':
     team_xpath = '/html/body/div[1]/div[1]/div/section[2]/div/div[2]/div[1]/div/div[3]/'
     
     wait = WebDriverWait(driver, 10)
-    
+    wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div/section[2]/div/div[2]/div[1]/div/div[9]/button'))).send_keys(Keys.ENTER)
+    try:
+        wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div/section[2]/div/div[2]/div[2]/div[2]/div[5]/form/select'))).send_keys("100")
+        wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div/section[2]/div/div[2]/div[2]/div[2]/div[5]/form/select/option[5]'))).click()
+    except:
+        pass
+
+
     # 연도 선택 2 ~ 44
     for idx1 in tqdm(range(2, 44)):
         year = idx1+1980
@@ -76,9 +83,16 @@ if __name__ == '__main__':
                 
             except:
                 # 사이트 재접속
-                url = 'http://www.statiz.co.kr/stat.php'
+                url = 'http://www.statiz.co.kr/stat.php?sn=100'
                 driver = webdriver.Chrome()
                 driver.get(url)
                 retry += 1
+
+                wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div/section[2]/div/div[2]/div[1]/div/div[9]/button'))).send_keys(Keys.ENTER)
+                try:
+                    wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div/section[2]/div/div[2]/div[2]/div[2]/div[5]/form/select'))).send_keys("100")
+                    wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div/section[2]/div/div[2]/div[2]/div[2]/div[5]/form/select/option[5]'))).click()
+                except:
+                    pass
                 
-    df.to_csv("hitter_record_1982_to_2023.csv",index=False)
+    df.to_csv("hitter_record_1982_to_2023(ver.2).csv",index=False)
